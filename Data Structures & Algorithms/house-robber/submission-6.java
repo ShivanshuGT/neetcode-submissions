@@ -1,0 +1,40 @@
+class Solution {
+
+    int helper(int[] nums, int ind, int val){
+        int n = nums.length;
+
+        if(ind >= n){
+            return val;
+        }
+
+        int pick = helper(nums, ind+2, val + nums[ind]);
+        int skip = helper(nums, ind+1, val);
+        return Math.max(pick, skip);
+    }
+    // public int rob(int[] nums) {
+    //     return helper(nums, 0, 0);
+    // }
+
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if(n == 1){
+            return nums[0];
+        }
+
+        if(n == 2){
+            return Math.max(nums[0], nums[1]);
+        }
+
+        int prev = Math.max(nums[0], nums[1]);
+        int prePrev = nums[0];
+        int ans = 0;
+        
+        for(int i = 2; i < n; i++){
+            ans = Math.max(nums[i] + prePrev, prev);
+            prePrev = prev;
+            prev = ans;
+        }
+        return ans;
+    }
+
+}
